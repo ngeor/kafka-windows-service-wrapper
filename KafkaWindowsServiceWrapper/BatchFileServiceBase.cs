@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KafkaWindowsServiceWrapper
@@ -120,7 +122,16 @@ namespace KafkaWindowsServiceWrapper
             };
 
             process.Start();
+            Thread.Sleep(CoolingTimeout);
             return process;
+        }
+
+        private TimeSpan CoolingTimeout
+        {
+            get
+            {
+                return TimeSpan.FromSeconds(Convert.ToInt32(ConfigurationManager.AppSettings["CoolingTimeout"]));
+            }
         }
     }
 }
