@@ -8,19 +8,59 @@ using System.Threading.Tasks;
 
 namespace KafkaWindowsServiceWrapper
 {
+    /// <summary>
+    /// A base class for services that are wrappers for batch files.
+    /// Such a service is started and stopped by a batch file.
+    /// </summary>
     public class BatchFileServiceBase : ServiceBase
     {
+        /// <summary>
+        /// Holds the underlying service process.
+        /// </summary>
         private Process process;
 
+        /// <summary>
+        /// Indicates if we're currently shutting down the windows service.
+        /// Useful to distinguish between an expected and unexpected termination of the underlying service.
+        /// </summary>
+        private bool exiting;
+
+        /// <summary>
+        /// Starts the service.
+        /// </summary>
+        /// <param name="args"></param>
         protected override void OnStart(string[] args)
         {
+            // clean up previously hanging process
+            OnStop();
+
+            // start the process
             process = RunBatchFile(GetStartBatchFile());
         }
 
+        /// <summary>
+        /// Stops the service.
+        /// </summary>
         protected override void OnStop()
         {
-            var stopProcess = RunBatchFile(GetStopBatchFile());
-            stopProcess.WaitForExit();
+            try
+            {
+                // indicate we're shutting down the service on purpose
+                exiting = true;
+
+                var stopProcess = RunBatchFile(GetStopBatchFile());
+                stopProcess.WaitForExit();
+
+                if (process != null)
+                {
+                    process.WaitForExit();
+                    process = null;
+                }
+            }
+            finally
+            {
+                exiting = false;
+            }
         }
 
         /// <summary>
@@ -53,7 +93,7 @@ namespace KafkaWindowsServiceWrapper
         /// <param name="command"></param>
         /// <returns></returns>
         /// <remarks>
-        /// Code copied from https://github.com/lukemerrett/Kafka-Windows-Service
+        /// Code based on https://github.com/lukemerrett/Kafka-Windows-Service
         /// </remarks>
         private Process RunBatchFile(string command)
         {
@@ -66,7 +106,17 @@ namespace KafkaWindowsServiceWrapper
             process.EnableRaisingEvents = true;
             process.Exited += (sender, e) =>
             {
-                EventLog.WriteEntry("Process exited: " + command);
+                if (exiting)
+                {
+                    EventLog.WriteEntry("Process exited: " + command);
+                }
+                else
+                {
+                    EventLog.WriteEntry("Process exited unexpectedly: " + command, EventLogEntryType.Error);
+
+                    // stop the windows service to align with the underlying service
+                    Stop();
+                }
             };
 
             process.Start();

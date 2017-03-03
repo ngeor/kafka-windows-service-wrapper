@@ -8,9 +8,15 @@ using System.Threading.Tasks;
 
 namespace KafkaWindowsServiceWrapper
 {
+    /// <summary>
+    /// Handles installing services.
+    /// </summary>
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer
     {
+        /// <summary>
+        /// Creates an instance of this class.
+        /// </summary>
         public ProjectInstaller()
         {
             InitializeComponent();
