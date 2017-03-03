@@ -1,0 +1,12 @@
+version: 1.0.{build}
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+build:
+  verbosity: normal
+artifacts:
+- path: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe
+- path: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe.config
