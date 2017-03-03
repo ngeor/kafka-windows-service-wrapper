@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,11 @@ namespace KafkaWindowsServiceWrapper
 {
     public static class Utils
     {
-        private static string KafkaInstallationDirectory
+        public static string KafkaInstallationDirectory
         {
             get
             {
-                return @"C:\ecommerce\kafka_2.11-0.10.1.0";
+                return ConfigurationManager.AppSettings["KafkaInstallationDirectory"];
             }
         }
 

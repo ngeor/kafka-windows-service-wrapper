@@ -62,7 +62,8 @@ namespace KafkaWindowsServiceWrapper
             processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
             {
                 CreateNoWindow = true,
-                UseShellExecute = false
+                UseShellExecute = false,
+                WorkingDirectory = Utils.KafkaInstallationDirectory
             };
 
             return Process.Start(processInfo);
