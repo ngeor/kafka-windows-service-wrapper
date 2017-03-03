@@ -1,6 +1,8 @@
 # kafka-windows-service-wrapper
 A Windows service wrapper for Apache Kafka
 
+![Kafka and ZooKeeper installed as Windows Services](./services.png?raw=true "Kafka and ZooKeeper installed as Windows Services")
+
 ## Installation
 
 - Build the project using Visual Studio
