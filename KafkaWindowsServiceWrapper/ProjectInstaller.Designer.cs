@@ -43,12 +43,16 @@
             this.zooKeeperServiceInstaller.Description = "ZooKeeper is a centralized service for maintaining configuration information.";
             this.zooKeeperServiceInstaller.DisplayName = "Apache ZooKeeper";
             this.zooKeeperServiceInstaller.ServiceName = "ZooKeeper";
+            this.zooKeeperServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // kafkaServiceInstaller
             // 
             this.kafkaServiceInstaller.Description = "Kafka™ is used for building real-time data pipelines and streaming apps.";
             this.kafkaServiceInstaller.DisplayName = "Apache Kafka";
             this.kafkaServiceInstaller.ServiceName = "Kafka";
+            this.kafkaServiceInstaller.ServicesDependedOn = new string[] {
+        "ZooKeeper"};
+            this.kafkaServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
