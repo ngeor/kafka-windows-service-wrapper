@@ -57,16 +57,20 @@ namespace KafkaWindowsServiceWrapper
         /// </remarks>
         private Process RunBatchFile(string command)
         {
-            ProcessStartInfo processInfo;
-
-            processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
+            var process = new Process();
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.WorkingDirectory = Utils.KafkaInstallationDirectory;
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.Arguments = "/c " + command;
+            process.EnableRaisingEvents = true;
+            process.Exited += (sender, e) =>
             {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                WorkingDirectory = Utils.KafkaInstallationDirectory
+                EventLog.WriteEntry("Process exited: " + command);
             };
 
-            return Process.Start(processInfo);
+            process.Start();
+            return process;
         }
     }
 }
