@@ -54,6 +54,7 @@
     <Compile Include="BatchFileServiceBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="InstallUtils.cs" />
     <Compile Include="Kafka.cs">
       <SubType>Component</SubType>
     </Compile>

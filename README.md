@@ -5,22 +5,27 @@ A Windows service wrapper for Apache Kafka
 
 ![Kafka and ZooKeeper installed as Windows Services](./services.png?raw=true "Kafka and ZooKeeper installed as Windows Services")
 
-## Installation
+## Prerequisites
+It is expected that you've already downloaded and unzipped the Kafka zip bundle from the official website.
+Additionally, it is assumed that you haven't modified any files or the folder structure.
+
+## Installing using the AppVeyor binaries
+AppVeyor is a continuous integration tool that produces binaries for this project.
+
+- Download the latest binary and configuration file from AppVeyor
+- Place them in a folder together
+- Make sure you edit the config file (see following section about Configuration)
+- Open a command prompt with Administrator privileges
+- From the folder where you placed the binary, run `KafkaWindowsServiceWrapper -install`
+
+## Installation using Visual Studio
+This method is more useful for developers who want to modify the code.
 
 - Build the project using Visual Studio
 - Install with installutil.exe (launch Developer Command Prompt for VS2015 as Administrator)
 
 ```
 installutil KafkaWindowsServiceWrapper.exe
-```
-
-## Uninstall
-
-- Stop the services if they're running
-- Uninstall completely with installutil.exe
-
-```
-installutil /u KafkaWindowsServiceWrapper.exe
 ```
 
 ## Configuration Settings
@@ -39,3 +44,10 @@ The following settings are used to detect that ZooKeeper is listening for connec
 The following setting is used to avoid race conditions when restarting services too fast:
 
 - CoolingTimeout: How long to wait, in seconds, after launching an external process such as ZooKeeper and Kafka (5 seconds by default).
+
+## Uninstall
+Uninstall will remove the services from your system.
+
+- Stop the services if they're running
+- Open a command prompt with Administrator privileges
+- Run `KafkaWindowsServiceWrapper -uninstall`
