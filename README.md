@@ -10,7 +10,7 @@ It is expected that you've already downloaded and unzipped the Kafka zip bundle 
 Additionally, it is assumed that you haven't modified any files or the folder structure.
 
 ## Installing using the AppVeyor binaries
-AppVeyor is a continuous integration tool that produces binaries for this project.
+AppVeyor is a continuous integration tool that produces [binaries](https://ci.appveyor.com/project/ngeor/kafka-windows-service-wrapper) for this project.
 
 - Download the latest binary and configuration file from AppVeyor
 - Place them in a folder together
