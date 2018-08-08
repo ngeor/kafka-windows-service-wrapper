@@ -10,15 +10,15 @@ build:
 artifacts:
 - path: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe
 - path: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe.config
+skip_tags: true # important so that we don't end up in infinite loop of builds
 deploy:
   release: v$(appveyor_build_version)
   description: 'Automatic release'
   provider: GitHub
   auth_token:
     secure: JeugoAg7I3+r9378cO4Tgo5ystDLa7cOf/8fmplBOYZfHGYUBnIriyDhplBRIn32
-  artifact: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe
+  artifact: /.*/ # upload all the artifacts
   draft: false
   prerelease: false
   on:
     branch: master
-    appveyor_repo_tag: true
