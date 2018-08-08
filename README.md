@@ -9,12 +9,12 @@ A Windows service wrapper for Apache Kafka
 It is expected that you've already downloaded and unzipped the Kafka zip bundle from the official website.
 Additionally, it is assumed that you haven't modified any files or the folder structure.
 
-## Installing using the AppVeyor binaries
-AppVeyor is a continuous integration tool that produces [binaries](https://ci.appveyor.com/project/ngeor/kafka-windows-service-wrapper) for this project.
+## Installing using the prebuilt binaries
+AppVeyor is a continuous integration tool that produces binaries for this project.
 
-- Download the latest binary and configuration file from AppVeyor. They are in the [artifacts](https://ci.appveyor.com/project/ngeor/kafka-windows-service-wrapper/build/artifacts) tab.
+- Download the [latest binary and configuration file](https://github.com/ngeor/kafka-windows-service-wrapper/releases/latest).
 - Place them in a folder together
-- Make sure you edit the config file (see following section about Configuration)
+- Make sure you **edit** the config file (see following section about Configuration)
 - Open a command prompt with Administrator privileges
 - From the folder where you placed the binary, run `KafkaWindowsServiceWrapper -install`
 
