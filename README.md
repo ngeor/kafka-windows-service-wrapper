@@ -46,8 +46,26 @@ The following setting is used to avoid race conditions when restarting services 
 - CoolingTimeout: How long to wait, in seconds, after launching an external process such as ZooKeeper and Kafka (5 seconds by default).
 
 ## Uninstall
+
 Uninstall will remove the services from your system.
 
 - Stop the services if they're running
 - Open a command prompt with Administrator privileges
 - Run `KafkaWindowsServiceWrapper -uninstall`
+
+## Releasing
+
+Releasing is done by pusing a tag to the repo, in the format of vMajor.Minor.Patch
+
+Before releasing:
+
+- Make sure you don't have any pending changes and you're on the default branch
+- Make sure the version in appveyor yaml matches the tag you intend to push.
+  If you will push version 1.2.3, the version in appveyor yaml must be `1.2.3.{build}`.
+  If this isn't the case, push a commit first to prepare the version.
+
+Releasing:
+
+- Push a tag in the format of vMajor.Minor.Patch, e.g. v1.2.3
+
+It should publish a new GitHub release containing the artifacts of the build.

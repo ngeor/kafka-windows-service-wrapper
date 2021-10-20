@@ -18,7 +18,7 @@ deploy:
   auth_token:
     secure: Pfv6/i0zNvnV0giM32OlsBscMYF2dguWuuiDEp/ujquJU73bbPlcWfj12YYsCFl1
   artifact: /.*/ # upload all the artifacts
-  draft: true
+  draft: false
   prerelease: false
   on:
     APPVEYOR_REPO_TAG: true
