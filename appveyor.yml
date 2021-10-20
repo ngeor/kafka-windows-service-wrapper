@@ -1,4 +1,4 @@
-version: 1.1.{build}
+version: 1.1.0.{build}
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -11,8 +11,9 @@ artifacts:
 - path: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe
 - path: KafkaWindowsServiceWrapper\bin\Debug\KafkaWindowsServiceWrapper.exe.config
 deploy:
-  release: v$(appveyor_build_version)
-  description: 'Automatic release'
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  description: 'Automatic release $(APPVEYOR_REPO_TAG_NAME)'
   provider: GitHub
   auth_token:
     secure: Pfv6/i0zNvnV0giM32OlsBscMYF2dguWuuiDEp/ujquJU73bbPlcWfj12YYsCFl1
