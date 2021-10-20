@@ -6,7 +6,7 @@ A Windows service wrapper for Apache Kafka
 ![Kafka and ZooKeeper installed as Windows Services](./services.png?raw=true "Kafka and ZooKeeper installed as Windows Services")
 
 ## Prerequisites
-It is expected that you've already downloaded and unzipped the Kafka zip bundle from the official website.
+It is expected that you've already downloaded and unzipped the Kafka zip bundle [from the official website](https://kafka.apache.org/downloads). Tested with [2.8.1](https://archive.apache.org/dist/kafka/2.8.1/kafka_2.13-2.8.1.tgz).
 Additionally, it is assumed that you haven't modified any files or the folder structure.
 
 ## Installing using the prebuilt binaries
@@ -22,7 +22,7 @@ AppVeyor is a continuous integration tool that produces binaries for this projec
 This method is more useful for developers who want to modify the code.
 
 - Build the project using Visual Studio
-- Install with installutil.exe (launch Developer Command Prompt for VS2015 as Administrator)
+- Install with installutil.exe (launch Developer Command Prompt for VS2019 as Administrator)
 
 ```
 installutil KafkaWindowsServiceWrapper.exe
