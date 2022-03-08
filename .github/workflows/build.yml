@@ -8,12 +8,20 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v1
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Add msbuild to PATH # https://github.com/microsoft/setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Setup NuGet # https://github.com/NuGet/setup-nuget
+      uses: nuget/setup-nuget@v1
+    - name: Restore NuGet packages
+      run: nuget restore KafkaWindowsServiceWrapper.sln
+    - name: Build project
+      run: msbuild -t:rebuild -property:Configuration=Release KafkaWindowsServiceWrapper.sln
+    - name: Upload binaries
+      uses: actions/upload-artifact@v3
       with:
-        dotnet-version: '3.1.x'
-    - run: dotnet build
-    - run: dotnet test
+        name: binaries
+        path: KafkaWindowsServiceWrapper*/bin/Release/*/KafkaWindowsServiceWrapper*.*
