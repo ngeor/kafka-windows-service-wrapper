@@ -8,18 +8,16 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Add msbuild to PATH # https://github.com/microsoft/setup-msbuild
-      uses: microsoft/setup-msbuild@v1.1
-    - name: Setup NuGet # https://github.com/NuGet/setup-nuget
-      uses: nuget/setup-nuget@v1
-    - name: Restore NuGet packages
-      run: nuget restore KafkaWindowsServiceWrapper.sln
-    - name: Build project
-      run: msbuild -t:rebuild -property:Configuration=Release KafkaWindowsServiceWrapper.sln
+    - uses: actions/checkout@v2
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+    - run: dotnet build
+    - run: dotnet test -v normal
+    - run: dotnet build -c Release
     - name: Upload binaries
       uses: actions/upload-artifact@v3
       with:
