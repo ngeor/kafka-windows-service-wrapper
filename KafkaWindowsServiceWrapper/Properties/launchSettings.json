@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "KafkaWindowsServiceWrapper": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
