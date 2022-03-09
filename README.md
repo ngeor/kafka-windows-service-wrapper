@@ -69,3 +69,34 @@ Releasing:
 - Push a tag in the format of vMajor.Minor.Patch, e.g. v1.2.3
 
 It should publish a new GitHub release containing the artifacts of the build.
+
+# New instructions
+
+https://docs.microsoft.com/en-us/dotnet/core/extensions/windows-service
+
+Run PowerShell as an Administrator.
+
+```
+sc.exe create "Svc Name" binpath="C:\Path\To\App.exe --contentRoot C:\Other\Path"
+```
+
+    depend= <Dependencies(separated by / (forward slash))>
+    DisplayName= <display name>
+
+```
+sc.exe delete ".NET Joke Service"
+```
+
+```
+sc.exe create "ApacheZookeeper" binpath="C:\Users\ngeor\Projects\github\kafka-windows-service-wrapper\KafkaWindowsServiceWrapper\bin\Debug\netcoreapp3.1\win-x64\publish\KafkaWindowsServiceWrapper.exe --contentRoot=C:\Users\ngeor\Projects\github\kafka-windows-service-wrapper\KafkaWindowsServiceWrapper --name=ApacheZookeeper"
+[SC] CreateService SUCCESS
+
+sc.exe create "ApacheKafka" binpath="C:\Users\ngeor\Projects\github\kafka-windows-service-wrapper\KafkaWindowsServiceWrapper\bin\Debug\netcoreapp3.1\win-x64\publish\KafkaWindowsServiceWrapper.exe --contentRoot=C:\Users\ngeor\Projects\github\kafka-windows-service-wrapper\KafkaWindowsServiceWrapper --name=ApacheKafka" depend=ApacheZookeeper
+[SC] CreateService SUCCESS
+
+sc.exe delete "ApacheKafka"
+[SC] DeleteService SUCCESS
+
+sc.exe delete "ApacheZookeeper"
+[SC] DeleteService SUCCESS
+```

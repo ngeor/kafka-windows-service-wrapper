@@ -1,56 +1,36 @@
-﻿using System;
-using System.ServiceProcess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace KafkaWindowsServiceWrapper
 {
-    static class Program
+    public class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            if (args.Length == 1)
-            {
-                HandleArgument(args[0]);
-                return;
-            }
-
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new ZooKeeper(),
-                new Kafka()
-            };
-            ServiceBase.Run(ServicesToRun);
+            CreateHostBuilder(args).Build().Run();
         }
 
-        private static void HandleArgument(string argument)
-        {
-            switch (argument)
-            {
-                case "-install":
-                    Install();
-                    break;
-                case "-uninstall":
-                    Uninstall();
-                    break;
-                default:
-                    Environment.ExitCode = 1;
-                    break;
-            }
-        }
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseWindowsService(options =>
+                {
+                    options.ServiceName = ServiceName(args);
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<Worker>();
+                });
 
-        private static void Uninstall()
+        private static string ServiceName(string[] args)
         {
-            InstallUtils.StopService("Kafka");
-            InstallUtils.StopService("ZooKeeper");
-            InstallUtils.UninstallServices(typeof(Program).Assembly);
-        }
-
-        private static void Install()
-        {
-            InstallUtils.InstallServices(typeof(Program).Assembly);
+            var q = from arg in args
+                    where arg.StartsWith("--name=")
+                    select arg.Split("=")[1];
+            return q.Single();
         }
     }
 }
