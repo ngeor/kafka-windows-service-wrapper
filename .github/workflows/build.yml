@@ -18,11 +18,8 @@ jobs:
     - run: dotnet build
     - run: dotnet test -v normal
     - run: dotnet build -c Release
-    - run: dotnet publish -c Release
     - name: Upload binaries
       uses: actions/upload-artifact@v3
       with:
         name: binaries
-        path: |
-          KafkaWindowsServiceWrapper/bin/Release/netcoreapp3.1/win-x64/publish/KafkaWindowsServiceWrapper.exe
-          KafkaWindowsServiceWrapper/appsettings.json
+        path: KafkaWindowsServiceWrapper*/bin/Release/*/KafkaWindowsServiceWrapper*.*
